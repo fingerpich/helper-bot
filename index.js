@@ -1,14 +1,12 @@
-const puppeteer = require('puppeteer')
-const getOptions = require('./get-options')
-// import puppeteer from 'puppeteer-extra'
-// import puppeteerExtra from 'puppeteer-extra-plugin-stealth'
-// const stealthPlugin = StealthPlugin();
-// puppeteer.use(stealthPlugin);
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin= require('puppeteer-extra-plugin-stealth')
+const stealthPlugin = StealthPlugin();
+puppeteer.use(stealthPlugin);
 
 async function run() {
-  const browser = await puppeteer.launch(getOptions(''));
+  const browser = await puppeteer.launch({headless: false, args: ['--no-sandbox']});
   const page = await browser.newPage();
-  await page.waitForNavigation()
+  // await page.waitForNavigation()
   const url = 'https://www.vfsvisaonline.com/Netherlands-Global-Online-Appointment_Zone2/AppScheduling/AppWelcome.aspx?P=itfjUBdSE44q%2BnOPqZhld%2FqUJKKtoDf2%2BrAuCfMkyc4%3D'
   await page.goto(url, {
     waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']
